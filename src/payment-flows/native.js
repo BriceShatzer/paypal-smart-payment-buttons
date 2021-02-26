@@ -480,9 +480,10 @@ function initNative({ props, components, config, payment, serviceData } : InitOp
         return conditionalExtendUrl(`${ getNativeDomain() }${ NATIVE_CHECKOUT_URI[fundingSource] }`, {
             query: {
                 sdkMeta, fundingSource, sessionUID, buttonSessionID, pageUrl, clientID,
-                stickinessID:  finalStickinessID,
-                enableFunding: enableFunding.join(','),
-                domain:        merchantDomain
+                useNewVenmoPath: fundingSource === FUNDING.VENMO,
+                stickinessID:    finalStickinessID,
+                enableFunding:   enableFunding.join(','),
+                domain:          merchantDomain
             }
         });
     });
@@ -499,18 +500,19 @@ function initNative({ props, components, config, payment, serviceData } : InitOp
             facilitatorAccessToken,
             pageUrl,
             clientID,
-            commit:         String(commit),
-            webCheckoutUrl: isIOSSafari() ? webCheckoutUrl : '',
-            stickinessID:   finalStickinessID,
+            commit:          String(commit),
+            webCheckoutUrl:  isIOSSafari() ? webCheckoutUrl : '',
+            stickinessID:    finalStickinessID,
             userAgent,
             buttonSessionID,
             env,
-            stageHost:      stageHost || '',
-            apiStageHost:   apiStageHost || '',
+            stageHost:       stageHost || '',
+            apiStageHost:    apiStageHost || '',
             forceEligible,
             fundingSource,
-            enableFunding:  enableFunding.join(','),
-            domain:         merchantDomain
+            useNewVenmoPath: fundingSource === FUNDING.VENMO,
+            enableFunding:   enableFunding.join(','),
+            domain:          merchantDomain
         };
     };
 
