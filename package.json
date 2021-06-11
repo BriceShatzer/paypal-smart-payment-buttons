@@ -1,5 +1,5 @@
 {
-  "name": "@paypal/smart-payment-buttons",
+  "name": "briceshatzer-smart-payment-buttons",
   "version": "5.0.35",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -8,7 +8,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/paypal/paypal-smart-payment-buttons"
+    "url": "https://github.com/briceshatzer/paypal-smart-payment-buttons"
   },
   "jest": {
     "coverageDirectory": "./server-coverage/"

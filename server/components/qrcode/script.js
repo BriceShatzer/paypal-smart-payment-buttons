@@ -1,57 +1,70 @@
-/* @flow */
+"use strict";
 
-import { join } from 'path';
+exports.__esModule = true;
+exports.compileLocalSmartQRCodeClientScript = compileLocalSmartQRCodeClientScript;
+exports.getSmartQRCodeClientScript = getSmartQRCodeClientScript;
 
-import { ENV } from '@paypal/sdk-constants';
+var _path = require("path");
 
-import type { CacheType } from '../../types';
-import { QRCODE_CLIENT_JS, QRCODE_CLIENT_MIN_JS, WEBPACK_CONFIG, ACTIVE_TAG, SMART_BUTTONS_MODULE } from '../../config';
-import { isLocalOrTest, compileWebpack, babelRequire, resolveScript, dynamicRequire, type LoggerBufferType } from '../../lib';
-import { getPayPalSmartPaymentButtonsWatcher } from '../../watchers';
+var _sdkConstants = require("@paypal/sdk-constants");
 
-const ROOT = join(__dirname, '../../..');
+var _config = require("../../config");
 
-type SmartQRCodeClientScript = {|
-    script : string,
-    version : string
-|};
+var _lib = require("../../lib");
 
-export async function compileLocalSmartQRCodeClientScript() : Promise<?SmartQRCodeClientScript> {
-    const webpackScriptPath = resolveScript(join(ROOT, WEBPACK_CONFIG));
+var _watchers = require("../../watchers");
 
-    if (webpackScriptPath && isLocalOrTest()) {
-        const { WEBPACK_CONFIG_QRCODE_DEBUG } = babelRequire(webpackScriptPath);
-        const script = await compileWebpack(WEBPACK_CONFIG_QRCODE_DEBUG, ROOT);
-        return { script, version: ENV.LOCAL };
-    }
+const ROOT = (0, _path.join)(__dirname, '../../..');
 
-    const distScriptPath = resolveScript(join(SMART_BUTTONS_MODULE, QRCODE_CLIENT_JS));
+async function compileLocalSmartQRCodeClientScript() {
+  const webpackScriptPath = (0, _lib.resolveScript)((0, _path.join)(ROOT, _config.WEBPACK_CONFIG));
 
-    if (distScriptPath) {
-        const script = dynamicRequire(distScriptPath);
-        return { script, version: ENV.LOCAL };
-    }
+  if (webpackScriptPath && (0, _lib.isLocalOrTest)()) {
+    const {
+      WEBPACK_CONFIG_QRCODE_DEBUG
+    } = (0, _lib.babelRequire)(webpackScriptPath);
+    const script = await (0, _lib.compileWebpack)(WEBPACK_CONFIG_QRCODE_DEBUG, ROOT);
+    return {
+      script,
+      version: _sdkConstants.ENV.LOCAL
+    };
+  }
+
+  const distScriptPath = (0, _lib.resolveScript)((0, _path.join)(_config.SMART_BUTTONS_MODULE, _config.QRCODE_CLIENT_JS));
+
+  if (distScriptPath) {
+    const script = (0, _lib.dynamicRequire)(distScriptPath);
+    return {
+      script,
+      version: _sdkConstants.ENV.LOCAL
+    };
+  }
 }
 
-type GetSmartQRCodeClientScriptOptions = {|
-    debug : boolean,
-    logBuffer : ?LoggerBufferType,
-    cache : ?CacheType,
-    useLocal? : boolean
-|};
+async function getSmartQRCodeClientScript({
+  logBuffer,
+  cache,
+  debug = false,
+  useLocal = (0, _lib.isLocalOrTest)()
+} = {}) {
+  if (useLocal) {
+    const script = await compileLocalSmartQRCodeClientScript();
 
-export async function getSmartQRCodeClientScript({ logBuffer, cache, debug = false, useLocal = isLocalOrTest() } : GetSmartQRCodeClientScriptOptions = {}) : Promise<SmartQRCodeClientScript> {
-    if (useLocal) {
-        const script = await compileLocalSmartQRCodeClientScript();
-
-        if (script) {
-            return script;
-        }
+    if (script) {
+      return script;
     }
+  }
 
-    const watcher = getPayPalSmartPaymentButtonsWatcher({ logBuffer, cache });
-    const { version } = await watcher.get(ACTIVE_TAG);
-    const script = await watcher.read(debug ? QRCODE_CLIENT_JS : QRCODE_CLIENT_MIN_JS, ACTIVE_TAG);
-
-    return { script, version };
+  const watcher = (0, _watchers.getPayPalSmartPaymentButtonsWatcher)({
+    logBuffer,
+    cache
+  });
+  const {
+    version
+  } = await watcher.get(_config.ACTIVE_TAG);
+  const script = await watcher.read(debug ? _config.QRCODE_CLIENT_JS : _config.QRCODE_CLIENT_MIN_JS, _config.ACTIVE_TAG);
+  return {
+    script,
+    version
+  };
 }
