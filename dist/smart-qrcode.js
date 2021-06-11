@@ -1,4 +1,4 @@
-window.spb = function(modules) {
+window.spbQRCode = function(modules) {
     var installedModules = {};
     function __webpack_require__(moduleId) {
         if (installedModules[moduleId]) return installedModules[moduleId].exports;
@@ -55,10 +55,12 @@ window.spb = function(modules) {
         return {}.hasOwnProperty.call(object, property);
     };
     __webpack_require__.p = "";
-    return __webpack_require__(__webpack_require__.s = 2);
+    return __webpack_require__(__webpack_require__.s = 4);
 }([ function(module, exports, __webpack_require__) {
-    module.exports = __webpack_require__(1);
+    module.exports = __webpack_require__(2);
     module.exports.default = module.exports;
+}, function(module, exports, __webpack_require__) {
+    module.exports = __webpack_require__(3);
 }, function(module, exports, __webpack_require__) {
     "undefined" != typeof self && self, module.exports = function(modules) {
         var installedModules = {};
@@ -2273,12 +2275,506 @@ window.spb = function(modules) {
         }
         setup();
     } ]);
+}, function(module, exports, __webpack_require__) {
+    "undefined" != typeof self && self, module.exports = function(modules) {
+        var installedModules = {};
+        function __webpack_require__(moduleId) {
+            if (installedModules[moduleId]) return installedModules[moduleId].exports;
+            var module = installedModules[moduleId] = {
+                i: moduleId,
+                l: !1,
+                exports: {}
+            };
+            modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+            module.l = !0;
+            return module.exports;
+        }
+        __webpack_require__.m = modules;
+        __webpack_require__.c = installedModules;
+        __webpack_require__.d = function(exports, name, getter) {
+            __webpack_require__.o(exports, name) || Object.defineProperty(exports, name, {
+                enumerable: !0,
+                get: getter
+            });
+        };
+        __webpack_require__.r = function(exports) {
+            "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(exports, Symbol.toStringTag, {
+                value: "Module"
+            });
+            Object.defineProperty(exports, "__esModule", {
+                value: !0
+            });
+        };
+        __webpack_require__.t = function(value, mode) {
+            1 & mode && (value = __webpack_require__(value));
+            if (8 & mode) return value;
+            if (4 & mode && "object" == typeof value && value && value.__esModule) return value;
+            var ns = Object.create(null);
+            __webpack_require__.r(ns);
+            Object.defineProperty(ns, "default", {
+                enumerable: !0,
+                value: value
+            });
+            if (2 & mode && "string" != typeof value) for (var key in value) __webpack_require__.d(ns, key, function(key) {
+                return value[key];
+            }.bind(null, key));
+            return ns;
+        };
+        __webpack_require__.n = function(module) {
+            var getter = module && module.__esModule ? function() {
+                return module.default;
+            } : function() {
+                return module;
+            };
+            __webpack_require__.d(getter, "a", getter);
+            return getter;
+        };
+        __webpack_require__.o = function(object, property) {
+            return {}.hasOwnProperty.call(object, property);
+        };
+        __webpack_require__.p = "";
+        return __webpack_require__(__webpack_require__.s = 0);
+    }([ function(module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        __webpack_require__.d(__webpack_exports__, "ElementNode", (function() {
+            return node_ElementNode;
+        }));
+        __webpack_require__.d(__webpack_exports__, "FragmentNode", (function() {
+            return node_FragmentNode;
+        }));
+        __webpack_require__.d(__webpack_exports__, "TextNode", (function() {
+            return node_TextNode;
+        }));
+        __webpack_require__.d(__webpack_exports__, "ComponentNode", (function() {
+            return node_ComponentNode;
+        }));
+        __webpack_require__.d(__webpack_exports__, "node", (function() {
+            return node_node;
+        }));
+        __webpack_require__.d(__webpack_exports__, "Fragment", (function() {
+            return Fragment;
+        }));
+        __webpack_require__.d(__webpack_exports__, "text", (function() {
+            return text_text;
+        }));
+        __webpack_require__.d(__webpack_exports__, "dom", (function() {
+            return dom;
+        }));
+        __webpack_require__.d(__webpack_exports__, "react", (function() {
+            return react;
+        }));
+        __webpack_require__.d(__webpack_exports__, "html", (function() {
+            return html;
+        }));
+        __webpack_require__.d(__webpack_exports__, "preact", (function() {
+            return preact;
+        }));
+        __webpack_require__.d(__webpack_exports__, "regex", (function() {
+            return regex;
+        }));
+        __webpack_require__.d(__webpack_exports__, "NODE_TYPE", (function() {
+            return NODE_TYPE;
+        }));
+        __webpack_require__.d(__webpack_exports__, "Style", (function() {
+            return Style;
+        }));
+        __webpack_require__.d(__webpack_exports__, "Regex", (function() {
+            return Regex;
+        }));
+        __webpack_require__.d(__webpack_exports__, "RegexText", (function() {
+            return RegexText;
+        }));
+        __webpack_require__.d(__webpack_exports__, "RegexWord", (function() {
+            return RegexWord;
+        }));
+        __webpack_require__.d(__webpack_exports__, "RegexCharacters", (function() {
+            return RegexCharacters;
+        }));
+        __webpack_require__.d(__webpack_exports__, "RegexGroup", (function() {
+            return RegexGroup;
+        }));
+        __webpack_require__.d(__webpack_exports__, "RegexUnion", (function() {
+            return RegexUnion;
+        }));
+        var NODE_TYPE = {
+            ELEMENT: "element",
+            TEXT: "text",
+            COMPONENT: "component",
+            FRAGMENT: "fragment"
+        };
+        function _renderChildren(children, renderer) {
+            var result = [];
+            for (var _i2 = 0; _i2 < children.length; _i2++) {
+                var renderedChild = children[_i2].render(renderer);
+                if (renderedChild) if (Array.isArray(renderedChild)) for (var _i4 = 0; _i4 < renderedChild.length; _i4++) {
+                    var subchild = renderedChild[_i4];
+                    subchild && result.push(subchild);
+                } else result.push(renderedChild);
+            }
+            return result;
+        }
+        var node_ElementNode = function() {
+            function ElementNode(name, props, children) {
+                this.type = NODE_TYPE.ELEMENT;
+                this.name = void 0;
+                this.props = void 0;
+                this.children = void 0;
+                this.onRender = void 0;
+                this.name = name;
+                this.props = props || {};
+                this.children = children;
+                var onRender = this.props.onRender;
+                if ("function" == typeof onRender) {
+                    this.onRender = onRender;
+                    delete props.onRender;
+                }
+            }
+            var _proto = ElementNode.prototype;
+            _proto.render = function(renderer) {
+                var el = renderer(this);
+                this.onRender && this.onRender(el);
+                return el;
+            };
+            _proto.renderChildren = function(renderer) {
+                return _renderChildren(this.children, renderer);
+            };
+            return ElementNode;
+        }();
+        var node_FragmentNode = function() {
+            function FragmentNode(children) {
+                this.type = NODE_TYPE.FRAGMENT;
+                this.children = void 0;
+                this.children = children;
+            }
+            FragmentNode.prototype.render = function(renderer) {
+                return _renderChildren(this.children, renderer);
+            };
+            return FragmentNode;
+        }();
+        var node_TextNode = function() {
+            function TextNode(text) {
+                this.type = NODE_TYPE.TEXT;
+                this.text = void 0;
+                this.text = text;
+            }
+            TextNode.prototype.render = function(renderer) {
+                return renderer(this);
+            };
+            return TextNode;
+        }();
+        var node_ComponentNode = function() {
+            function ComponentNode(component, props, children) {
+                this.type = NODE_TYPE.COMPONENT;
+                this.component = void 0;
+                this.props = void 0;
+                this.children = void 0;
+                this.component = component;
+                this.props = props || {};
+                this.children = children;
+                this.props.children = children;
+            }
+            var _proto4 = ComponentNode.prototype;
+            _proto4.renderComponent = function(renderer) {
+                var child = function(child) {
+                    var children = normalizeChildren(Array.isArray(child) ? child : [ child ]);
+                    return 1 === children.length ? children[0] : children.length > 1 ? new node_FragmentNode(children) : void 0;
+                }(this.component(this.props, this.children));
+                if (child) return child.render(renderer);
+            };
+            _proto4.render = function(renderer) {
+                return renderer(this);
+            };
+            _proto4.renderChildren = function(renderer) {
+                return _renderChildren(this.children, renderer);
+            };
+            return ComponentNode;
+        }();
+        function normalizeChildren(children) {
+            var result = [];
+            for (var _i6 = 0; _i6 < children.length; _i6++) {
+                var child = children[_i6];
+                if (child) if ("string" == typeof child || "number" == typeof child) result.push(new node_TextNode(child.toString())); else {
+                    if ("boolean" == typeof child) continue;
+                    if (Array.isArray(child)) for (var _i8 = 0, _normalizeChildren2 = normalizeChildren(child); _i8 < _normalizeChildren2.length; _i8++) result.push(_normalizeChildren2[_i8]); else {
+                        if (!child || child.type !== NODE_TYPE.ELEMENT && child.type !== NODE_TYPE.TEXT && child.type !== NODE_TYPE.COMPONENT) throw new TypeError("Unrecognized node type: " + typeof child);
+                        result.push(child);
+                    }
+                }
+            }
+            return result;
+        }
+        var node_node = function(element, props) {
+            for (var _len = arguments.length, children = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) children[_key - 2] = arguments[_key];
+            children = normalizeChildren(children);
+            if ("string" == typeof element) return new node_ElementNode(element, props, children);
+            if ("function" == typeof element) return new node_ComponentNode(element, props, children);
+            throw new TypeError("Expected jsx element to be a string or a function");
+        };
+        var Fragment = function(props, children) {
+            return children;
+        };
+        function text_text() {
+            return function textRenderer(node) {
+                if (node.type === NODE_TYPE.COMPONENT) return [].concat(node.renderComponent(textRenderer)).join("");
+                if (node.type === NODE_TYPE.ELEMENT) throw new Error("Text renderer does not support basic elements");
+                if (node.type === NODE_TYPE.TEXT) return node.text;
+                throw new TypeError("Unhandleable node: " + node.type);
+            };
+        }
+        function isDefined(val) {
+            return null != val;
+        }
+        var _ADD_CHILDREN;
+        var ADD_CHILDREN = ((_ADD_CHILDREN = {}).iframe = function(el, node) {
+            var firstChild = node.children[0];
+            if (1 !== node.children.length || !firstChild || firstChild.type !== NODE_TYPE.ELEMENT || "html" !== firstChild.name) throw new Error("Expected only single html element node as child of iframe element");
+            el.addEventListener("load", (function() {
+                var win = el.contentWindow;
+                if (!win) throw new Error("Expected frame to have contentWindow");
+                var doc = win.document;
+                var docElement = doc.documentElement;
+                for (;docElement.children && docElement.children.length; ) docElement.removeChild(docElement.children[0]);
+                var child = firstChild.render(dom({
+                    doc: doc
+                }));
+                for (;child.children.length; ) docElement.appendChild(child.children[0]);
+            }));
+        }, _ADD_CHILDREN.script = function(el, node) {
+            var firstChild = node.children[0];
+            if (1 !== node.children.length || !firstChild || firstChild.type !== NODE_TYPE.TEXT) throw new Error("Expected only single text node as child of script element");
+            el.text = firstChild.text;
+        }, _ADD_CHILDREN.default = function(el, node, renderer) {
+            for (var _i6 = 0, _node$renderChildren2 = node.renderChildren(renderer); _i6 < _node$renderChildren2.length; _i6++) el.appendChild(_node$renderChildren2[_i6]);
+        }, _ADD_CHILDREN);
+        function dom(opts) {
+            void 0 === opts && (opts = {});
+            var _opts$doc = opts.doc, doc = void 0 === _opts$doc ? document : _opts$doc;
+            return function domRenderer(node) {
+                if (node.type === NODE_TYPE.COMPONENT) return node.renderComponent(domRenderer);
+                if (node.type === NODE_TYPE.TEXT) return function(doc, node) {
+                    return doc.createTextNode(node.text);
+                }(doc, node);
+                if (node.type === NODE_TYPE.ELEMENT) {
+                    var el = function(doc, node) {
+                        return node.props.el ? node.props.el : doc.createElement(node.name);
+                    }(doc, node);
+                    !function(el, node) {
+                        var props = node.props;
+                        for (var _i4 = 0, _Object$keys2 = Object.keys(props); _i4 < _Object$keys2.length; _i4++) {
+                            var prop = _Object$keys2[_i4];
+                            var val = props[prop];
+                            null != val && "el" !== prop && "innerHTML" !== prop && (prop.match(/^on[A-Z][a-z]/) && "function" == typeof val ? el.addEventListener(prop.slice(2).toLowerCase(), val) : "string" == typeof val || "number" == typeof val ? el.setAttribute(prop, val.toString()) : "boolean" == typeof val && !0 === val && el.setAttribute(prop, ""));
+                        }
+                        "iframe" !== el.tagName.toLowerCase() || props.id || el.setAttribute("id", "jsx-iframe-" + "xxxxxxxxxx".replace(/./g, (function() {
+                            return "0123456789abcdef".charAt(Math.floor(Math.random() * "0123456789abcdef".length));
+                        })));
+                    }(el, node);
+                    !function(el, node, doc, renderer) {
+                        if (node.props.hasOwnProperty("innerHTML")) {
+                            if (node.children.length) throw new Error("Expected no children to be passed when innerHTML prop is set");
+                            var html = node.props.innerHTML;
+                            if ("string" != typeof html) throw new TypeError("innerHTML prop must be string");
+                            if ("script" === node.name) el.text = html; else {
+                                el.innerHTML = html;
+                                !function(el, doc) {
+                                    void 0 === doc && (doc = window.document);
+                                    for (var _i2 = 0, _el$querySelectorAll2 = el.querySelectorAll("script"); _i2 < _el$querySelectorAll2.length; _i2++) {
+                                        var script = _el$querySelectorAll2[_i2];
+                                        var parentNode = script.parentNode;
+                                        if (parentNode) {
+                                            var newScript = doc.createElement("script");
+                                            newScript.text = script.textContent;
+                                            parentNode.replaceChild(newScript, script);
+                                        }
+                                    }
+                                }(el, doc);
+                            }
+                        } else (ADD_CHILDREN[node.name] || ADD_CHILDREN.default)(el, node, renderer);
+                    }(el, node, doc, domRenderer);
+                    return el;
+                }
+                throw new TypeError("Unhandleable node");
+            };
+        }
+        function _extends() {
+            return (_extends = Object.assign || function(target) {
+                for (var i = 1; i < arguments.length; i++) {
+                    var source = arguments[i];
+                    for (var key in source) ({}).hasOwnProperty.call(source, key) && (target[key] = source[key]);
+                }
+                return target;
+            }).apply(this, arguments);
+        }
+        function _objectWithoutPropertiesLoose(source, excluded) {
+            if (null == source) return {};
+            var target = {};
+            var sourceKeys = Object.keys(source);
+            var key, i;
+            for (i = 0; i < sourceKeys.length; i++) excluded.indexOf(key = sourceKeys[i]) >= 0 || (target[key] = source[key]);
+            return target;
+        }
+        function react(_temp) {
+            var React = (void 0 === _temp ? {} : _temp).React;
+            if (!React) throw new Error("Must pass React library to react renderer");
+            return function reactRenderer(node) {
+                if (node.type === NODE_TYPE.COMPONENT) return React.createElement.apply(React, [ function() {
+                    return node.renderComponent(reactRenderer) || null;
+                }, node.props ].concat(node.renderChildren(reactRenderer)));
+                if (node.type === NODE_TYPE.ELEMENT) return React.createElement.apply(React, [ node.name, (props = node.props, 
+                innerHTML = props.innerHTML, _extends({
+                    dangerouslySetInnerHTML: innerHTML ? {
+                        __html: innerHTML
+                    } : null,
+                    className: props.class
+                }, _objectWithoutPropertiesLoose(props, [ "innerHTML", "class" ]))) ].concat(node.renderChildren(reactRenderer)));
+                var props, innerHTML;
+                if (node.type === NODE_TYPE.TEXT) return node.text;
+                throw new TypeError("Unhandleable node");
+            };
+        }
+        var SELF_CLOSING_TAGS = {
+            br: !0
+        };
+        function htmlEncode(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/\//g, "&#x2F;");
+        }
+        function html() {
+            return function htmlRenderer(node) {
+                if (node.type === NODE_TYPE.COMPONENT) return [].concat(node.renderComponent(htmlRenderer)).join("");
+                if (node.type === NODE_TYPE.ELEMENT) {
+                    var renderedProps = (props = node.props, (keys = Object.keys(props).filter((function(key) {
+                        var val = props[key];
+                        return "innerHTML" !== key && ("string" == typeof val || "number" == typeof val || !0 === val);
+                    }))).length ? " " + keys.map((function(key) {
+                        var val = props[key];
+                        if (!0 === val) return "" + htmlEncode(key);
+                        if ("string" != typeof val && "number" != typeof val) throw new TypeError("Unexpected prop type: " + typeof val);
+                        return "" === val ? htmlEncode(key) : htmlEncode(key) + '="' + htmlEncode(val.toString()) + '"';
+                    })).join(" ") : "");
+                    if (SELF_CLOSING_TAGS[node.name]) return "<" + node.name + renderedProps + " />";
+                    var renderedChildren = "string" == typeof node.props.innerHTML ? node.props.innerHTML : node.renderChildren(htmlRenderer).join("");
+                    return "<" + node.name + renderedProps + ">" + renderedChildren + "</" + node.name + ">";
+                }
+                var props, keys;
+                if (node.type === NODE_TYPE.TEXT) return htmlEncode(node.text);
+                throw new TypeError("Unhandleable node: " + node.type);
+            };
+        }
+        function preact(_temp) {
+            var Preact = (void 0 === _temp ? {} : _temp).Preact;
+            if (!Preact) throw new Error("Must pass Preact library to react renderer");
+            return function reactRenderer(node) {
+                if (node.type === NODE_TYPE.COMPONENT) return Preact.h.apply(Preact, [ function() {
+                    return node.renderComponent(reactRenderer) || null;
+                }, node.props ].concat(node.renderChildren(reactRenderer)));
+                if (node.type === NODE_TYPE.ELEMENT) return Preact.h.apply(Preact, [ node.name, (props = node.props, 
+                innerHTML = props.innerHTML, _extends({
+                    dangerouslySetInnerHTML: innerHTML ? {
+                        __html: innerHTML
+                    } : null
+                }, _objectWithoutPropertiesLoose(props, [ "innerHTML" ]))) ].concat(node.renderChildren(reactRenderer)));
+                var props, innerHTML;
+                if (node.type === NODE_TYPE.TEXT) return node.text;
+                throw new TypeError("Unhandleable node");
+            };
+        }
+        function regex() {
+            var regexRenderer = text_text();
+            return function(nodeInstance) {
+                return new RegExp(regexRenderer(nodeInstance));
+            };
+        }
+        regex.node = function(el, props) {
+            for (var _len = arguments.length, children = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) children[_key - 2] = arguments[_key];
+            var nodeInstance = node_node.apply(void 0, [ el, props ].concat(children));
+            return el.renderer ? nodeInstance.render(el.renderer()) : nodeInstance;
+        };
+        function Style(_ref) {
+            var css = _ref.css, nonce = _ref.nonce, children = _ref.children;
+            return node_node(Fragment, null, node_node("style", {
+                innerHTML: "string" == typeof css ? css : css._getCss(),
+                nonce: nonce
+            }), children);
+        }
+        var escapeRegex = function(text) {
+            return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&");
+        };
+        var regex_validateAndEscapeChildren = function(name, children) {
+            return (children = function(name, children) {
+                if (!children) throw new Error("Must pass children to " + name);
+                return children;
+            }(name, children)).map((function(child) {
+                return child.type === NODE_TYPE.TEXT ? new node_TextNode(escapeRegex(child.text)) : child;
+            }));
+        };
+        function Regex(_ref, children) {
+            var _ref$exact = _ref.exact, exact = void 0 === _ref$exact || _ref$exact;
+            children = regex_validateAndEscapeChildren("RegexGroup", children);
+            return exact ? [ "^" ].concat(children, [ "$" ]) : children;
+        }
+        Regex.renderer = regex;
+        function RegexText(props, children) {
+            return regex_validateAndEscapeChildren("RegexText", children);
+        }
+        function RegexWord(props, children) {
+            !function(name, children) {
+                if (children && children.length) throw new Error("Must not pass children to RegexWord");
+            }(0, children);
+            return "\\w+";
+        }
+        function RegexCharacters(props, children) {
+            return [ "[" ].concat(regex_validateAndEscapeChildren("RegexText", children), [ "]" ]);
+        }
+        function RegexGroup(_ref2, children) {
+            var repeat = _ref2.repeat, repeatMin = _ref2.repeatMin, repeatMax = _ref2.repeatMax, name = _ref2.name, _ref2$optional = _ref2.optional, optional = void 0 !== _ref2$optional && _ref2$optional, _ref2$capture = _ref2.capture, capture = void 0 === _ref2$capture || _ref2$capture, _ref2$union = _ref2.union, union = void 0 !== _ref2$union && _ref2$union;
+            children = regex_validateAndEscapeChildren("RegexGroup", children);
+            if (isDefined(repeat) && (isDefined(repeatMin) || isDefined(repeatMax))) throw new Error("repeat can not be used with repeatMin or repeatMax");
+            if (name && !capture) throw new Error("Named groups must be captured");
+            if (union) {
+                var _result = [];
+                for (var _i2 = 0, _children2 = children; _i2 < _children2.length; _i2++) {
+                    _result.push(_children2[_i2]);
+                    _result.push(new node_TextNode("|"));
+                }
+                _result.pop();
+                children = _result;
+            }
+            var result = [];
+            result.push(capture ? "(" : "(?:");
+            name && result.push("?<" + escapeRegex(name) + ">");
+            result.push.apply(result, children);
+            result.push(")");
+            isDefined(repeat) && ("number" == typeof repeat ? result.push("{" + repeat + "}") : !0 === repeat && result.push("+"));
+            (isDefined(repeatMin) || isDefined(repeatMax)) && result.push("{" + (repeatMin || "") + "," + (repeatMax || "") + "}");
+            optional && result.push("?");
+            return result;
+        }
+        function RegexUnion(props, children) {
+            var result = [];
+            for (var _i4 = 0, _children4 = children = regex_validateAndEscapeChildren("RegexGroup", children); _i4 < _children4.length; _i4++) {
+                result.push(_children4[_i4]);
+                result.push("|");
+            }
+            result.pop();
+            return result;
+        }
+    } ]);
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
     __webpack_require__.r(__webpack_exports__);
-    __webpack_require__.d(__webpack_exports__, "setupMenu", (function() {
-        return setupMenu;
+    __webpack_require__.d(__webpack_exports__, "renderQRCode", (function() {
+        return renderQRCode;
     }));
+    function _extends() {
+        return (_extends = Object.assign || function(target) {
+            for (var i = 1; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) ({}).hasOwnProperty.call(source, key) && (target[key] = source[key]);
+            }
+            return target;
+        }).apply(this, arguments);
+    }
     var n, preact_module_u, preact_module_i, preact_module_t, preact_module_r = {}, f = [], e = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
     function c(n, l) {
         for (var u in l) n[u] = l[u];
@@ -2538,19 +3034,6 @@ window.spb = function(modules) {
         });
         return t >= i.__.length && i.__.push({}), i.__[t];
     }
-    function hooks_module_l(n) {
-        return hooks_module_o = 1, function(n, r, o) {
-            var i = hooks_module_m(hooks_module_t++, 2);
-            return i.t = n, i.__c || (i.__ = [ hooks_module_w(void 0, r), function(n) {
-                var t = i.t(i.__[0], n);
-                i.__[0] !== t && (i.__ = [ t, i.__[1] ], i.__c.setState({}));
-            } ], i.__c = hooks_module_u), i.__;
-        }(hooks_module_w, n);
-    }
-    function hooks_module_y(r, o) {
-        var i = hooks_module_m(hooks_module_t++, 3);
-        !n.__s && hooks_module_k(i.__H, o) && (i.__ = r, i.__H = o, hooks_module_u.__H.__h.push(i));
-    }
     function hooks_module_x() {
         hooks_module_i.forEach((function(t) {
             if (t.__P) try {
@@ -2605,33 +3088,8 @@ window.spb = function(modules) {
         var t = hooks_module_u;
         n.__c = n.__(), hooks_module_u = t;
     }
-    function hooks_module_k(n, t) {
-        return !n || n.length !== t.length || t.some((function(t, u) {
-            return t !== n[u];
-        }));
-    }
     function hooks_module_w(n, t) {
         return "function" == typeof t ? t(n) : t;
-    }
-    function _setPrototypeOf(o, p) {
-        return (_setPrototypeOf = Object.setPrototypeOf || function(o, p) {
-            o.__proto__ = p;
-            return o;
-        })(o, p);
-    }
-    function _inheritsLoose(subClass, superClass) {
-        subClass.prototype = Object.create(superClass.prototype);
-        subClass.prototype.constructor = subClass;
-        _setPrototypeOf(subClass, superClass);
-    }
-    function _extends() {
-        return (_extends = Object.assign || function(target) {
-            for (var i = 1; i < arguments.length; i++) {
-                var source = arguments[i];
-                for (var key in source) ({}).hasOwnProperty.call(source, key) && (target[key] = source[key]);
-            }
-            return target;
-        }).apply(this, arguments);
     }
     function utils_isPromise(item) {
         try {
@@ -2975,30 +3433,6 @@ window.spb = function(modules) {
         var domain = getActualDomain(win);
         return domain && win.mockDomain && 0 === win.mockDomain.indexOf("mock:") ? win.mockDomain : domain;
     }
-    function isSameDomain(win) {
-        if (!function(win) {
-            try {
-                if (win === window) return !0;
-            } catch (err) {}
-            try {
-                var desc = Object.getOwnPropertyDescriptor(win, "location");
-                if (desc && !1 === desc.enumerable) return !1;
-            } catch (err) {}
-            try {
-                if (isAboutProtocol(win) && canReadFromWindow()) return !0;
-            } catch (err) {}
-            try {
-                if (getActualDomain(win) === getActualDomain(window)) return !0;
-            } catch (err) {}
-            return !1;
-        }(win)) return !1;
-        try {
-            if (win === window) return !0;
-            if (isAboutProtocol(win) && canReadFromWindow()) return !0;
-            if (getDomain(window) === getDomain(win)) return !0;
-        } catch (err) {}
-        return !1;
-    }
     var iframeWindows = [];
     var iframeFrames = [];
     function isWindowClosed(win, allowMock) {
@@ -3018,7 +3452,30 @@ window.spb = function(modules) {
         } catch (err) {
             return !err || err.message !== IE_WIN_ACCESS_ERROR;
         }
-        if (allowMock && isSameDomain(win)) try {
+        if (allowMock && function(win) {
+            if (!function(win) {
+                try {
+                    if (win === window) return !0;
+                } catch (err) {}
+                try {
+                    var desc = Object.getOwnPropertyDescriptor(win, "location");
+                    if (desc && !1 === desc.enumerable) return !1;
+                } catch (err) {}
+                try {
+                    if (isAboutProtocol(win) && canReadFromWindow()) return !0;
+                } catch (err) {}
+                try {
+                    if (getActualDomain(win) === getActualDomain(window)) return !0;
+                } catch (err) {}
+                return !1;
+            }(win)) return !1;
+            try {
+                if (win === window) return !0;
+                if (isAboutProtocol(win) && canReadFromWindow()) return !0;
+                if (getDomain(window) === getDomain(win)) return !0;
+            } catch (err) {}
+            return !1;
+        }(win)) try {
             if (win.mockclosed) return !0;
         } catch (err) {}
         try {
@@ -3222,66 +3679,18 @@ window.spb = function(modules) {
         };
         return CrossDomainSafeWeakMap;
     }();
-    function _getPrototypeOf(o) {
-        return (_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function(o) {
-            return o.__proto__ || Object.getPrototypeOf(o);
-        })(o);
-    }
-    function _isNativeReflectConstruct() {
-        if ("undefined" == typeof Reflect || !Reflect.construct) return !1;
-        if (Reflect.construct.sham) return !1;
-        if ("function" == typeof Proxy) return !0;
-        try {
-            Date.prototype.toString.call(Reflect.construct(Date, [], (function() {})));
-            return !0;
-        } catch (e) {
-            return !1;
-        }
-    }
-    function construct_construct(Parent, args, Class) {
-        return (construct_construct = _isNativeReflectConstruct() ? Reflect.construct : function(Parent, args, Class) {
-            var a = [ null ];
-            a.push.apply(a, args);
-            var instance = new (Function.bind.apply(Parent, a));
-            Class && _setPrototypeOf(instance, Class.prototype);
-            return instance;
-        }).apply(null, arguments);
-    }
-    function wrapNativeSuper_wrapNativeSuper(Class) {
-        var _cache = "function" == typeof Map ? new Map : void 0;
-        return (wrapNativeSuper_wrapNativeSuper = function(Class) {
-            if (null === Class || !(fn = Class, -1 !== Function.toString.call(fn).indexOf("[native code]"))) return Class;
-            var fn;
-            if ("function" != typeof Class) throw new TypeError("Super expression must either be null or a function");
-            if (void 0 !== _cache) {
-                if (_cache.has(Class)) return _cache.get(Class);
-                _cache.set(Class, Wrapper);
-            }
-            function Wrapper() {
-                return construct_construct(Class, arguments, _getPrototypeOf(this).constructor);
-            }
-            Wrapper.prototype = Object.create(Class.prototype, {
-                constructor: {
-                    value: Wrapper,
-                    enumerable: !1,
-                    writable: !0,
-                    configurable: !0
-                }
-            });
-            return _setPrototypeOf(Wrapper, Class);
-        })(Class);
+    function base64encode(str) {
+        if ("function" == typeof btoa) return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (function(m, p1) {
+            return String.fromCharCode(parseInt(p1, 16));
+        }))).replace(/[=]/g, "");
+        if ("undefined" != typeof Buffer) return Buffer.from(str, "utf8").toString("base64").replace(/[=]/g, "");
+        throw new Error("Can not find window.btoa or Buffer");
     }
     function uniqueID() {
         var chars = "0123456789abcdef";
         return "uid_" + "xxxxxxxxxx".replace(/./g, (function() {
             return chars.charAt(Math.floor(Math.random() * chars.length));
-        })) + "_" + function(str) {
-            if ("function" == typeof btoa) return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (function(m, p1) {
-                return String.fromCharCode(parseInt(p1, 16));
-            }))).replace(/[=]/g, "");
-            if ("undefined" != typeof Buffer) return Buffer.from(str, "utf8").toString("base64").replace(/[=]/g, "");
-            throw new Error("Can not find window.btoa or Buffer");
-        }((new Date).toISOString().slice(11, 19).replace("T", ".")).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+        })) + "_" + base64encode((new Date).toISOString().slice(11, 19).replace("T", ".")).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
     }
     var objectIDs;
     function serializeArgs(args) {
@@ -3356,29 +3765,16 @@ window.spb = function(modules) {
     memoize.clear = function() {
         memoizeGlobalIndexValidFrom = memoizeGlobalIndex;
     };
-    function src_util_noop() {}
     memoize((function(obj) {
         if (Object.values) return Object.values(obj);
         var result = [];
         for (var key in obj) obj.hasOwnProperty(key) && result.push(obj[key]);
         return result;
     }));
-    function arrayFrom(item) {
-        return [].slice.call(item);
+    function svgToBase64(svg) {
+        return "data:image/svg+xml;base64," + base64encode(svg);
     }
-    var util_ExtendableError = function(_Error) {
-        _inheritsLoose(ExtendableError, _Error);
-        function ExtendableError(message) {
-            var _this6;
-            (_this6 = _Error.call(this, message) || this).name = _this6.constructor.name;
-            "function" == typeof Error.captureStackTrace ? Error.captureStackTrace(function(self) {
-                if (void 0 === self) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-                return self;
-            }(_this6), _this6.constructor) : _this6.stack = new Error(message).stack;
-            return _this6;
-        }
-        return ExtendableError;
-    }(wrapNativeSuper_wrapNativeSuper(Error));
+    Error;
     function isDocumentReady() {
         return Boolean(document.body) && "complete" === document.readyState;
     }
@@ -3396,13 +3792,6 @@ window.spb = function(modules) {
             }), 10);
         }));
     }));
-    var dom_PopupOpenError = function(_ExtendableError) {
-        _inheritsLoose(PopupOpenError, _ExtendableError);
-        function PopupOpenError() {
-            return _ExtendableError.apply(this, arguments) || this;
-        }
-        return PopupOpenError;
-    }(util_ExtendableError);
     var currentScript = "undefined" != typeof document ? document.currentScript : null;
     var getCurrentScript = memoize((function() {
         if (currentScript) return currentScript;
@@ -3460,12 +3849,16 @@ window.spb = function(modules) {
     (_AMPLITUDE_API_KEY = {}).test = "a23fb4dfae56daf7c3212303b53a8527", _AMPLITUDE_API_KEY.local = "a23fb4dfae56daf7c3212303b53a8527", 
     _AMPLITUDE_API_KEY.stage = "a23fb4dfae56daf7c3212303b53a8527", _AMPLITUDE_API_KEY.sandbox = "a23fb4dfae56daf7c3212303b53a8527", 
     _AMPLITUDE_API_KEY.production = "ce423f79daba95faeb0694186170605c";
-    function getNonce() {
-        var nonce = "";
-        document.body && (nonce = document.body.getAttribute("data-nonce") || "");
-        return nonce;
-    }
     __webpack_require__(0);
+    var jsx_pragmatic = __webpack_require__(1);
+    function _objectWithoutPropertiesLoose(source, excluded) {
+        if (null == source) return {};
+        var target = {};
+        var sourceKeys = Object.keys(source);
+        var key, i;
+        for (i = 0; i < sourceKeys.length; i++) excluded.indexOf(key = sourceKeys[i]) >= 0 || (target[key] = source[key]);
+        return target;
+    }
     function _renderChildren(children, renderer) {
         var result = [];
         for (var _i2 = 0; _i2 < children.length; _i2++) {
@@ -3584,7 +3977,56 @@ window.spb = function(modules) {
             var doc = win.document;
             var docElement = doc.documentElement;
             for (;docElement.children && docElement.children.length; ) docElement.removeChild(docElement.children[0]);
-            var child = firstChild.render(dom({
+            var child = firstChild.render(function(opts) {
+                void 0 === opts && (opts = {});
+                var _opts$doc = opts.doc, doc = void 0 === _opts$doc ? document : _opts$doc;
+                return function domRenderer(node) {
+                    if ("component" === node.type) return node.renderComponent(domRenderer);
+                    if ("text" === node.type) return function(doc, node) {
+                        return doc.createTextNode(node.text);
+                    }(doc, node);
+                    if ("element" === node.type) {
+                        var el = function(doc, node) {
+                            return node.props.el ? node.props.el : doc.createElement(node.name);
+                        }(doc, node);
+                        !function(el, node) {
+                            var props = node.props;
+                            for (var _i4 = 0, _Object$keys2 = Object.keys(props); _i4 < _Object$keys2.length; _i4++) {
+                                var prop = _Object$keys2[_i4];
+                                var val = props[prop];
+                                null != val && "el" !== prop && "innerHTML" !== prop && (prop.match(/^on[A-Z][a-z]/) && "function" == typeof val ? el.addEventListener(prop.slice(2).toLowerCase(), val) : "string" == typeof val || "number" == typeof val ? el.setAttribute(prop, val.toString()) : "boolean" == typeof val && !0 === val && el.setAttribute(prop, ""));
+                            }
+                            "iframe" !== el.tagName.toLowerCase() || props.id || el.setAttribute("id", "jsx-iframe-" + "xxxxxxxxxx".replace(/./g, (function() {
+                                return "0123456789abcdef".charAt(Math.floor(Math.random() * "0123456789abcdef".length));
+                            })));
+                        }(el, node);
+                        !function(el, node, doc, renderer) {
+                            if (node.props.hasOwnProperty("innerHTML")) {
+                                if (node.children.length) throw new Error("Expected no children to be passed when innerHTML prop is set");
+                                var html = node.props.innerHTML;
+                                if ("string" != typeof html) throw new TypeError("innerHTML prop must be string");
+                                if ("script" === node.name) el.text = html; else {
+                                    el.innerHTML = html;
+                                    !function(el, doc) {
+                                        void 0 === doc && (doc = window.document);
+                                        for (var _i2 = 0, _el$querySelectorAll2 = el.querySelectorAll("script"); _i2 < _el$querySelectorAll2.length; _i2++) {
+                                            var script = _el$querySelectorAll2[_i2];
+                                            var parentNode = script.parentNode;
+                                            if (parentNode) {
+                                                var newScript = doc.createElement("script");
+                                                newScript.text = script.textContent;
+                                                parentNode.replaceChild(newScript, script);
+                                            }
+                                        }
+                                    }(el, doc);
+                                }
+                            } else (ADD_CHILDREN[node.name] || ADD_CHILDREN.default)(el, node, renderer);
+                        }(el, node, doc, domRenderer);
+                        return el;
+                    }
+                    throw new TypeError("Unhandleable node");
+                };
+            }({
                 doc: doc
             }));
             for (;child.children.length; ) docElement.appendChild(child.children[0]);
@@ -3596,237 +4038,590 @@ window.spb = function(modules) {
     }, _ADD_CHILDREN.default = function(el, node, renderer) {
         for (var _i6 = 0, _node$renderChildren2 = node.renderChildren(renderer); _i6 < _node$renderChildren2.length; _i6++) el.appendChild(_node$renderChildren2[_i6]);
     }, _ADD_CHILDREN);
-    function dom(opts) {
-        void 0 === opts && (opts = {});
-        var _opts$doc = opts.doc, doc = void 0 === _opts$doc ? document : _opts$doc;
-        return function domRenderer(node) {
-            if ("component" === node.type) return node.renderComponent(domRenderer);
-            if ("text" === node.type) return function(doc, node) {
-                return doc.createTextNode(node.text);
-            }(doc, node);
+    var SELF_CLOSING_TAGS = {
+        br: !0
+    };
+    function html_htmlEncode(text) {
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/\//g, "&#x2F;");
+    }
+    var components_excluded = [ "svg" ], _excluded2 = [ "render", "name", "logoColor" ];
+    function SVG(props) {
+        var svg = props.svg, otherProps = _objectWithoutPropertiesLoose(props, components_excluded);
+        if (!svg) throw new TypeError("Expected svg prop");
+        if ("string" != typeof (svg = svg.render((function htmlRenderer(node) {
+            if ("component" === node.type) return [].concat(node.renderComponent(htmlRenderer)).join("");
             if ("element" === node.type) {
-                var el = function(doc, node) {
-                    return node.props.el ? node.props.el : doc.createElement(node.name);
-                }(doc, node);
-                !function(el, node) {
-                    var props = node.props;
-                    for (var _i4 = 0, _Object$keys2 = Object.keys(props); _i4 < _Object$keys2.length; _i4++) {
-                        var prop = _Object$keys2[_i4];
-                        var val = props[prop];
-                        null != val && "el" !== prop && "innerHTML" !== prop && (prop.match(/^on[A-Z][a-z]/) && "function" == typeof val ? el.addEventListener(prop.slice(2).toLowerCase(), val) : "string" == typeof val || "number" == typeof val ? el.setAttribute(prop, val.toString()) : "boolean" == typeof val && !0 === val && el.setAttribute(prop, ""));
-                    }
-                    "iframe" !== el.tagName.toLowerCase() || props.id || el.setAttribute("id", "jsx-iframe-" + "xxxxxxxxxx".replace(/./g, (function() {
-                        return "0123456789abcdef".charAt(Math.floor(Math.random() * "0123456789abcdef".length));
-                    })));
-                }(el, node);
-                !function(el, node, doc, renderer) {
-                    if (node.props.hasOwnProperty("innerHTML")) {
-                        if (node.children.length) throw new Error("Expected no children to be passed when innerHTML prop is set");
-                        var html = node.props.innerHTML;
-                        if ("string" != typeof html) throw new TypeError("innerHTML prop must be string");
-                        if ("script" === node.name) el.text = html; else {
-                            el.innerHTML = html;
-                            !function(el, doc) {
-                                void 0 === doc && (doc = window.document);
-                                for (var _i2 = 0, _el$querySelectorAll2 = el.querySelectorAll("script"); _i2 < _el$querySelectorAll2.length; _i2++) {
-                                    var script = _el$querySelectorAll2[_i2];
-                                    var parentNode = script.parentNode;
-                                    if (parentNode) {
-                                        var newScript = doc.createElement("script");
-                                        newScript.text = script.textContent;
-                                        parentNode.replaceChild(newScript, script);
-                                    }
-                                }
-                            }(el, doc);
-                        }
-                    } else (ADD_CHILDREN[node.name] || ADD_CHILDREN.default)(el, node, renderer);
-                }(el, node, doc, domRenderer);
-                return el;
+                var renderedProps = (props = node.props, (keys = Object.keys(props).filter((function(key) {
+                    var val = props[key];
+                    return "innerHTML" !== key && ("string" == typeof val || "number" == typeof val || !0 === val);
+                }))).length ? " " + keys.map((function(key) {
+                    var val = props[key];
+                    if (!0 === val) return "" + html_htmlEncode(key);
+                    if ("string" != typeof val && "number" != typeof val) throw new TypeError("Unexpected prop type: " + typeof val);
+                    return "" === val ? html_htmlEncode(key) : html_htmlEncode(key) + '="' + html_htmlEncode(val.toString()) + '"';
+                })).join(" ") : "");
+                if (SELF_CLOSING_TAGS[node.name]) return "<" + node.name + renderedProps + " />";
+                var renderedChildren = "string" == typeof node.props.innerHTML ? node.props.innerHTML : node.renderChildren(htmlRenderer).join("");
+                return "<" + node.name + renderedProps + ">" + renderedChildren + "</" + node.name + ">";
             }
-            throw new TypeError("Unhandleable node");
-        };
+            var props, keys;
+            if ("text" === node.type) return html_htmlEncode(node.text);
+            throw new TypeError("Unhandleable node: " + node.type);
+        })))) throw new TypeError("Expected svg prop to be a string or jsx node");
+        var svgProps = _extends({
+            src: svgToBase64(svg)
+        }, otherProps);
+        return node_node("img", svgProps);
     }
-    function Spinner(_ref) {
-        return node_node("div", {
-            class: "preloader spinner"
-        }, node_node("style", {
-            nonce: _ref.nonce,
-            innerHTML: "\n\n    body {\n        width: 100%;\n        height: 100%;\n        overflow: hidden;\n        position: fixed;\n        top: 0;\n        left: 0;\n        margin: 0;\n    }\n\n    .spinner {\n        height: 100%;\n        width: 100%;\n        position: absolute;\n        z-index: 10\n    }\n\n    .spinner .spinWrap {\n        width: 200px;\n        height: 100px;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        margin-left: -100px;\n        margin-top: -50px\n    }\n\n    .spinner .loader,\n    .spinner .spinnerImage {\n        height: 100px;\n        width: 100px;\n        position: absolute;\n        top: 0;\n        left: 50%;\n        opacity: 1;\n        filter: alpha(opacity=100)\n    }\n\n    .spinner .spinnerImage {\n        margin: 28px 0 0 -25px;\n        background: url(https://www.paypalobjects.com/images/checkout/hermes/icon_ot_spin_lock_skinny.png) no-repeat\n    }\n\n    .spinner .loader {\n        margin: 0 0 0 -55px;\n        background-color: transparent;\n        animation: rotation .7s infinite linear;\n        border-left: 5px solid #cbcbca;\n        border-right: 5px solid #cbcbca;\n        border-bottom: 5px solid #cbcbca;\n        border-top: 5px solid #2380be;\n        border-radius: 100%\n    }\n\n    @keyframes rotation {\n        from {\n            transform: rotate(0deg)\n        }\n        to {\n            transform: rotate(359deg)\n        }\n    }\n"
-        }), node_node("div", {
-            class: "spinWrap"
-        }, node_node("p", {
-            class: "spinnerImage"
-        }), node_node("p", {
-            class: "loader"
-        })));
+    function SVGLogo(_ref) {
+        var render = _ref.render, name = _ref.name, logoColor = _ref.logoColor, props = _objectWithoutPropertiesLoose(_ref, _excluded2);
+        return node_node(SVG, _extends({}, props, {
+            svg: render(),
+            alt: "",
+            class: "paypal-logo paypal-logo-" + name + " " + (logoColor ? "paypal-logo-color-" + logoColor : "")
+        }));
     }
-    function SpinnerPage(_ref2, children) {
-        var nonce = _ref2.nonce;
-        return node_node("html", null, node_node("head", null, node_node("title", null, "PayPal"), node_node("meta", {
-            name: "viewport",
-            content: "width=device-width, initial-scale=1"
-        })), node_node("body", null, node_node(Spinner, {
-            nonce: nonce
-        }), children));
+    var _LOGO_COLORS;
+    (_LOGO_COLORS = {}).default = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, _LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, _LOGO_COLORS.black = {
+        primary: "#000000",
+        secondary: "#000000"
+    };
+    var logo_LOGO_COLORS;
+    (logo_LOGO_COLORS = {}).default = {
+        primary: "#005498",
+        secondary: "#FFD800"
+    }, logo_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, logo_LOGO_COLORS.black = {
+        primary: "#005498",
+        secondary: "#FFD800"
+    };
+    var glyph_logo_LOGO_COLORS;
+    (glyph_logo_LOGO_COLORS = {}).default = {
+        primary: "#333030"
+    }, glyph_logo_LOGO_COLORS.white = {
+        primary: "#ffffff"
+    }, glyph_logo_LOGO_COLORS.black = {
+        primary: "#333030"
+    };
+    var card_glyph_logo_LOGO_COLORS;
+    (card_glyph_logo_LOGO_COLORS = {}).default = {
+        primary: "#333030"
+    }, card_glyph_logo_LOGO_COLORS.white = {
+        primary: "#ffffff"
+    }, card_glyph_logo_LOGO_COLORS.black = {
+        primary: "#333030"
+    };
+    var credit_logo_LOGO_COLORS;
+    (credit_logo_LOGO_COLORS = {}).default = {
+        primary: "#003087"
+    }, credit_logo_LOGO_COLORS.blue = {
+        primary: "#003087"
+    }, credit_logo_LOGO_COLORS.white = {
+        primary: "#ffffff"
+    }, credit_logo_LOGO_COLORS.black = {
+        primary: "#333030"
+    };
+    var eps_logo_LOGO_COLORS;
+    (eps_logo_LOGO_COLORS = {}).default = {
+        primary: "#c8036f",
+        secondary: "#71706f"
+    }, eps_logo_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, eps_logo_LOGO_COLORS.black = {
+        primary: "#71706F",
+        secondary: "#C8036F"
+    };
+    var giropay_logo_LOGO_COLORS;
+    (giropay_logo_LOGO_COLORS = {}).default = {
+        primary: "#ED1C24",
+        secondary: "#ffffff",
+        tertiary: "#003a7d",
+        quaternary: "#FFFFFF"
+    }, giropay_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#000000",
+        tertiary: "#FFFFFF",
+        quaternary: "#FFFFFF"
+    }, giropay_logo_LOGO_COLORS.black = {
+        primary: "#ED1C24",
+        secondary: "#FFFFFF",
+        tertiary: "#003a7d",
+        quaternary: "#FFFFFF"
+    };
+    var ideal_logo_LOGO_COLORS;
+    (ideal_logo_LOGO_COLORS = {}).default = {
+        primary: "#000000",
+        secondary: "#cd0067",
+        tertiary: "#ffffff"
+    }, ideal_logo_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff",
+        tertiary: "#ffffff"
+    }, ideal_logo_LOGO_COLORS.black = {
+        primary: "#000000",
+        secondary: "#FFFFFF",
+        tertiary: "#CD0067"
+    };
+    var mybank_logo_LOGO_COLORS;
+    (mybank_logo_LOGO_COLORS = {}).default = {
+        primary: "#00C0EE",
+        secondary: "#1a4b67"
+    }, mybank_logo_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, mybank_logo_LOGO_COLORS.black = {
+        primary: "#1A4B67",
+        secondary: "#00C0EE"
+    };
+    var p24_logo_LOGO_COLORS;
+    (p24_logo_LOGO_COLORS = {}).default = {
+        primary: "#d03238",
+        secondary: "#b3b1b1"
+    }, p24_logo_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, p24_logo_LOGO_COLORS.black = {
+        primary: "#d03238",
+        secondary: "#b3b1b1"
+    };
+    var _PAYPAL_LOGO_COLORS, _PP_LOGO_COLORS;
+    (_PAYPAL_LOGO_COLORS = {}).default = {
+        primary: "#003087",
+        secondary: "#009cde"
+    }, _PAYPAL_LOGO_COLORS.blue = {
+        primary: "#003087",
+        secondary: "#009cde"
+    }, _PAYPAL_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        secondary: "#ffffff"
+    }, _PAYPAL_LOGO_COLORS.black = {
+        primary: "#333030",
+        secondary: "#636363"
+    }, _PAYPAL_LOGO_COLORS.monochrome = {
+        primary: "#000000",
+        secondary: "#000000"
+    };
+    (_PP_LOGO_COLORS = {}).default = {
+        primary: "#009cde",
+        secondary: "#012169",
+        tertiary: "#003087"
+    }, _PP_LOGO_COLORS.blue = {
+        primary: "#009cde",
+        secondary: "#012169",
+        tertiary: "#003087"
+    }, _PP_LOGO_COLORS.white = {
+        primary: "#ffffff",
+        primaryOpacity: "0.7",
+        secondary: "#ffffff",
+        secondaryOpacity: "0.7",
+        tertiary: "#ffffff"
+    }, _PP_LOGO_COLORS.black = {
+        primary: "#808080",
+        secondary: "#000000",
+        tertiary: "#1a1a1a"
+    };
+    var sepa_logo_LOGO_COLORS;
+    (sepa_logo_LOGO_COLORS = {}).default = {
+        main: "#005DA0",
+        card: "#AEB1BC"
+    }, sepa_logo_LOGO_COLORS.white = {
+        main: "#FFFFFF",
+        card: "#FFFFFF"
+    }, sepa_logo_LOGO_COLORS.black = {
+        main: "#333030",
+        card: "#333030"
+    };
+    var sofort_logo_LOGO_COLORS;
+    (sofort_logo_LOGO_COLORS = {}).default = {
+        primary: "#FFFFFF",
+        secondary: "#EB6F93"
+    }, sofort_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#2C2E2F"
+    }, sofort_logo_LOGO_COLORS.black = {
+        primary: "#FFFFFF",
+        secondary: "#EB6F93"
+    };
+    var venmo_logo_excluded = [ "logoColor" ];
+    var venmo_logo_LOGO_COLORS;
+    var logos_venmo_logo_LOGO_COLORS = ((venmo_logo_LOGO_COLORS = {}).default = {
+        primary: "#3D93CE"
+    }, venmo_logo_LOGO_COLORS.blue = {
+        primary: "#3D93CE"
+    }, venmo_logo_LOGO_COLORS.white = {
+        primary: "#ffffff"
+    }, venmo_logo_LOGO_COLORS.black = {
+        primary: "#333030"
+    }, venmo_logo_LOGO_COLORS);
+    var itau_logo_LOGO_COLORS;
+    (itau_logo_LOGO_COLORS = {}).default = {
+        primary: "#ffffff"
+    }, itau_logo_LOGO_COLORS.blue = {
+        primary: "#003087"
+    }, itau_logo_LOGO_COLORS.white = {
+        primary: "#ffffff"
+    }, itau_logo_LOGO_COLORS.black = {
+        primary: "#333030"
+    };
+    var wechatpay_logo_LOGO_COLORS;
+    (wechatpay_logo_LOGO_COLORS = {}).default = {
+        primary: "#1AAD19",
+        secondary: "#4D4D4D"
+    }, wechatpay_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#FFFFFF"
+    }, wechatpay_logo_LOGO_COLORS.black = {
+        primary: "#333030",
+        secondary: "#333030"
+    };
+    var zimpler_logo_LOGO_COLORS;
+    (zimpler_logo_LOGO_COLORS = {}).default = {
+        primary: "#00A599"
+    }, zimpler_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF"
+    }, zimpler_logo_LOGO_COLORS.black = {
+        primary: "#00A599"
+    };
+    var payu_logo_LOGO_COLORS;
+    (payu_logo_LOGO_COLORS = {}).default = {
+        primary: "#A6d71c",
+        secondary: "#3C932A",
+        tertiary: "#6CC62E",
+        quaternary: "#278D30"
+    }, payu_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#FFFFFF",
+        tertiary: "#000000",
+        quaternary: "#FFFFFF"
+    }, payu_logo_LOGO_COLORS.black = {
+        primary: "#333030",
+        secondary: "#333030",
+        tertiary: "#ffffff",
+        quaternary: "#333030"
+    };
+    var verkkopankki_logo_LOGO_COLORS;
+    (verkkopankki_logo_LOGO_COLORS = {}).default = {
+        primary: "#FFFFFF",
+        secondary: "#CACCC8",
+        tertiary: "#2D59A1",
+        quaternary: "#1F3364",
+        quinary: "#4E4E4E",
+        senary: "#1B4482"
+    }, verkkopankki_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#CACCC8",
+        tertiary: "#2D59A1",
+        quaternary: "#1F3364",
+        quinary: "#4E4E4E",
+        senary: "#1B4482"
+    }, verkkopankki_logo_LOGO_COLORS.black = {
+        primary: "#000000",
+        secondary: "#000000",
+        tertiary: "#FFFFFF",
+        quaternary: "#FFFFFF",
+        quinary: "#000000",
+        senary: "#000000"
+    };
+    var blik_logo_LOGO_COLORS;
+    (blik_logo_LOGO_COLORS = {}).default = {
+        primary: "#4D4D4F",
+        secondary: "#000000",
+        tertiary: "#FF0000",
+        quaternary: "#E83E49",
+        quinary: "#FF00FF",
+        senary: "#FFFFFF"
+    }, blik_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#FFFFFF",
+        tertiary: "#000000",
+        quaternary: "#000000",
+        quinary: "#000000",
+        senary: "#000000"
+    }, blik_logo_LOGO_COLORS.black = {
+        primary: "#4D4D4F",
+        secondary: "#000000",
+        tertiary: "#FF0000",
+        quaternary: "#E83E49",
+        quinary: "#FF00FF",
+        senary: "#FFFFFF"
+    };
+    var trustly_logo_LOGO_COLORS;
+    (trustly_logo_LOGO_COLORS = {}).default = {
+        primary: "#020202",
+        secondary: "#64CC07"
+    }, trustly_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#FFFFFF"
+    }, trustly_logo_LOGO_COLORS.black = {
+        primary: "#000000",
+        secondary: "#000000"
+    };
+    var oxxo_logo_LOGO_COLORS;
+    (oxxo_logo_LOGO_COLORS = {}).default = {
+        primary: "#EC1D24",
+        secondary: "#EDA42D",
+        tertiary: "#FEFEFE"
+    }, oxxo_logo_LOGO_COLORS.white = {
+        primary: "#EC1D24",
+        secondary: "#EDA42D",
+        tertiary: "#FEFEFE"
+    }, oxxo_logo_LOGO_COLORS.black = {
+        primary: "#EC1D24",
+        secondary: "#EDA42D",
+        tertiary: "#FEFEFE"
+    };
+    var boleto_logo_LOGO_COLORS;
+    (boleto_logo_LOGO_COLORS = {}).default = {
+        primary: "#1A1919",
+        secondary: "#FFFFFE"
+    }, boleto_logo_LOGO_COLORS.white = {
+        primary: "#1A1919",
+        secondary: "#FFFFFE"
+    }, boleto_logo_LOGO_COLORS.black = {
+        primary: "#1A1919",
+        secondary: "#FFFFFE"
+    };
+    var maxima_logo_LOGO_COLORS;
+    (maxima_logo_LOGO_COLORS = {}).default = {
+        primary: "#004A91",
+        secondary: "#ED1921"
+    }, maxima_logo_LOGO_COLORS.white = {
+        primary: "#004A91",
+        secondary: "#ED1921"
+    }, maxima_logo_LOGO_COLORS.black = {
+        primary: "#004A91",
+        secondary: "#ED1921"
+    };
+    var mercadopago_logo_LOGO_COLORS;
+    (mercadopago_logo_LOGO_COLORS = {}).default = {
+        primary: "#2D3277",
+        secondary: "#FFFFFF",
+        tertiary: "#009EE3",
+        quaternary: "#009EE3"
+    }, mercadopago_logo_LOGO_COLORS.white = {
+        primary: "#FFFFFF",
+        secondary: "#000000",
+        tertiary: "#FFFFFF",
+        quaternary: "#000000"
+    }, mercadopago_logo_LOGO_COLORS.black = {
+        primary: "#2D3277",
+        secondary: "#FFFFFF",
+        tertiary: "#009EE3",
+        quaternary: "#009EE3"
+    };
+    function ErrorMessage(_ref) {
+        var resetFunc = _ref.resetFunc;
+        return preact_module_a("div", {
+            id: "error-view"
+        }, preact_module_a("div", {
+            className: "error-message"
+        }, _ref.message || "An issue has occurred"), preact_module_a("button", {
+            className: "reset-button",
+            type: "button",
+            onClick: resetFunc
+        }, "Try scanning again"));
     }
-    function Menu(_ref) {
-        var choices = _ref.choices, onBlur = _ref.onBlur, cspNonce = _ref.cspNonce, verticalOffset = _ref.verticalOffset;
-        var autoFocus = function(_temp) {
-            var _ref = void 0 === _temp ? {} : _temp, _ref$onFocus = _ref.onFocus, onFocus = void 0 === _ref$onFocus ? src_util_noop : _ref$onFocus, _ref$onFocusFail = _ref.onFocusFail, onFocusFail = void 0 === _ref$onFocusFail ? src_util_noop : _ref$onFocusFail;
-            var ref = (hooks_module_o = 5, function(n, u) {
-                var r = hooks_module_m(hooks_module_t++, 7);
-                return hooks_module_k(r.__H, u) && (r.__ = {
-                    current: void 0
-                }, r.__H = u, r.__h = n), r.__;
-            }((function() {
-                return {
-                    current: void 0
-                };
-            }), []));
-            hooks_module_y((function() {
-                if (ref.current) {
-                    ref.current.focus();
-                    document.activeElement === ref.current ? onFocus() : onFocusFail();
-                }
-            }));
-            return ref;
-        }({
-            onFocus: _ref.onFocus,
-            onFocusFail: _ref.onFocusFail
+    function QRCodeElement(_ref2) {
+        return preact_module_a("img", {
+            id: "qr-code",
+            src: "data:image/svg+xml;base64," + btoa(_ref2.svgString),
+            alt: "QR Code"
         });
-        return preact_module_a(y, null, preact_module_a("style", {
-            nonce: cspNonce
-        }, '\n                    .menu {\n                        width: 100%;\n                        z-index: 5000;\n                        background: white;\n                        border-radius: 0 0 3px 3px;\n                        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n                        letter-spacing: 0.5px;\n                        box-shadow: 0px 0px 3px 1px rgba(222,222,222,1);\n                        outline-style: none;\n                        user-select: none;\n                        text-align: center;\n                        margin-top: ' + verticalOffset + "px;\n                        overflow: hidden;\n                    }\n                    \n                    .menu-item {\n                        border-top: 2px solid rgba(230, 230, 230, 0.5);;\n                        color: #0070ba;\n                        cursor: pointer;\n                    }\n                    \n                    .menu-item:first-child {\n                        border-top: none;\n                    }\n                    \n                    .menu-item:hover {\n                        background: #fcfcfc;\n                        text-decoration: underline;\n                    }\n\n                    @media screen and (min-width: 0px) {\n                        .menu-item {\n                            font-size: 11px;\n                            line-height: 14px;\n                            padding: 8px;\n                        }\n                    }\n\n                    @media screen and (min-width: 300px) {\n                        .menu-item {\n                            font-size: 14px;\n                            line-height: 18px;\n                            padding: 14px;\n                        }\n                    }\n\n                    @media screen and (min-width: 500px) {\n                        .menu-item {\n                            font-size: 18px;\n                            line-height: 21px;\n                            padding: 17px;\n                        }\n                    }\n                "), preact_module_a("div", {
-            class: "menu",
-            tabIndex: "0",
-            onBlur: onBlur,
-            ref: autoFocus
-        }, choices.map((function(choice) {
-            return preact_module_a("div", {
-                class: "menu-item",
-                onClick: function() {
-                    return function(choice) {
-                        var win;
-                        choice.popup && (win = function(_ref) {
-                            var win = function(win) {
-                                if (!isSameDomain(win)) throw new Error("Expected window to be same domain");
-                                return win;
-                            }(function(url, options) {
-                                var width = (options = options || {}).width, height = options.height;
-                                var top = 0;
-                                var left = 0;
-                                width && (window.outerWidth ? left = Math.round((window.outerWidth - width) / 2) + window.screenX : window.screen.width && (left = Math.round((window.screen.width - width) / 2)));
-                                height && (window.outerHeight ? top = Math.round((window.outerHeight - height) / 2) + window.screenY : window.screen.height && (top = Math.round((window.screen.height - height) / 2)));
-                                width && height && (options = _extends({
-                                    top: top,
-                                    left: left,
-                                    width: width,
-                                    height: height,
-                                    status: 1,
-                                    toolbar: 0,
-                                    menubar: 0,
-                                    resizable: 1,
-                                    scrollbars: 1
-                                }, options));
-                                var name = options.name || "";
-                                delete options.name;
-                                var params = Object.keys(options).map((function(key) {
-                                    if (null != options[key]) return key + "=" + ("string" == typeof (item = options[key]) ? item : item && item.toString && "function" == typeof item.toString ? item.toString() : {}.toString.call(item));
-                                    var item;
-                                })).filter(Boolean).join(",");
-                                var win;
-                                try {
-                                    win = window.open("", name, params);
-                                } catch (err) {
-                                    throw new dom_PopupOpenError("Can not open popup window - " + (err.stack || err.message));
-                                }
-                                if (isWindowClosed(win)) {
-                                    var err;
-                                    throw new dom_PopupOpenError("Can not open popup window - blocked");
-                                }
-                                window.addEventListener("unload", (function() {
-                                    return win.close();
-                                }));
-                                return win;
-                            }(0, {
-                                width: _ref.width,
-                                height: _ref.height
-                            }));
-                            var doc = win.document;
-                            !function(win, el) {
-                                var tag = el.tagName.toLowerCase();
-                                if ("html" !== tag) throw new Error("Expected element to be html, got " + tag);
-                                var documentElement = win.document.documentElement;
-                                for (var _i6 = 0, _arrayFrom2 = arrayFrom(documentElement.children); _i6 < _arrayFrom2.length; _i6++) documentElement.removeChild(_arrayFrom2[_i6]);
-                                for (var _i8 = 0, _arrayFrom4 = arrayFrom(el.children); _i8 < _arrayFrom4.length; _i8++) documentElement.appendChild(_arrayFrom4[_i8]);
-                            }(win, node_node(SpinnerPage, {
-                                nonce: getNonce()
-                            }).render(dom({
-                                doc: doc
-                            })));
-                            return win;
-                        }({
-                            width: choice.popup.width,
-                            height: choice.popup.height
-                        }));
-                        return choice.onSelect({
-                            win: win
-                        });
-                    }(choice);
-                }
-            }, choice.label);
+    }
+    function Logo() {
+        return (_ref = {
+            logoColor: "default"
+        }, _ref$logoColor = _ref.logoColor, logoColor = void 0 === _ref$logoColor ? "default" : _ref$logoColor, 
+        props = _objectWithoutPropertiesLoose(_ref, venmo_logo_excluded), primary = function(name, logoColorMap, logoColor) {
+            var colors;
+            logoColor && (colors = logoColorMap[logoColor]);
+            colors || (colors = logoColorMap.default);
+            if (!colors) throw new Error("No " + (logoColor || "default") + " logo available for sofort");
+            return colors;
+        }(0, logos_venmo_logo_LOGO_COLORS, logoColor).primary, node_node(SVGLogo, _extends({}, props, {
+            name: "venmo",
+            logoColor: logoColor,
+            render: function() {
+                return node_node("svg", {
+                    width: "101",
+                    height: "32",
+                    viewBox: "0 0 101 32",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    preserveAspectRatio: "xMinYMin meet"
+                }, node_node("g", {
+                    id: "Page-1",
+                    stroke: "none",
+                    "stroke-width": "1",
+                    fill: "none",
+                    "fill-rule": "evenodd"
+                }, node_node("g", {
+                    id: "Blue",
+                    fill: primary
+                }, node_node("g", {
+                    id: "Logo",
+                    transform: "translate(0.000000, 6.000000)"
+                }, node_node("path", {
+                    d: "M16.6660484,0.18 C17.3466626,1.3390991 17.6535069,2.53297297 17.6535069,4.04108108 C17.6535069,8.85117117 13.671346,15.0998198 10.439346,19.4875676 L3.05725952,19.4875676 L0.0966314879,1.23315315 L6.56045675,0.60036036 L8.12578201,13.5895495 C9.58835986,11.1326126 11.3932543,7.27153153 11.3932543,4.6390991 C11.3932543,3.1981982 11.1538599,2.21675676 10.7797405,1.40864865 L16.6660484,0.18 Z M24.9071592,11.6938739 C24.9071592,13.8367568 26.062718,14.6774775 27.5946678,14.6774775 C29.2629152,14.6774775 30.860218,14.2571171 32.9363097,13.1691892 L32.154346,18.6445045 C30.6915934,19.3814414 28.4119291,19.8731532 26.1991903,19.8731532 C20.5863512,19.8731532 18.5775346,16.3632432 18.5775346,11.9753153 C18.5775346,6.28810811 21.8451817,0.249369369 28.5819516,0.249369369 C32.2909931,0.249369369 34.3649879,2.39207207 34.3649879,5.37567568 C34.3653374,10.1855856 28.3783789,11.6590991 24.9071592,11.6938739 Z M25.0434567,8.2181982 C26.2329152,8.2181982 29.2274429,7.65711712 29.2274429,5.90216216 C29.2274429,5.05945946 28.6495761,4.6390991 27.9686125,4.6390991 C26.7772318,4.6390991 25.2138287,6.11225225 25.0434567,8.2181982 Z M53.0187093,4.4636036 C53.0187093,5.16558559 52.9154377,6.18378378 52.8126903,6.84918919 L50.8730709,19.4873874 L44.5790934,19.4873874 L46.3483408,7.90216216 C46.381891,7.58792793 46.4849879,6.95531532 46.4849879,6.60432432 C46.4849879,5.76162162 45.9743962,5.55135135 45.3605329,5.55135135 C44.5451938,5.55135135 43.7279325,5.93711712 43.1836159,6.21873874 L41.1768962,19.4875676 L34.8474464,19.4875676 L37.7390519,0.565945946 L43.2171661,0.565945946 L43.2865381,2.07621622 C44.5789187,1.19873874 46.2807163,0.24972973 48.6952803,0.24972973 C51.8942543,0.249369369 53.0187093,1.93495495 53.0187093,4.4636036 Z M71.7037093,2.32072072 C73.5063322,0.988108108 75.2084792,0.249369369 77.5554187,0.249369369 C80.7872439,0.249369369 81.9113495,1.93495495 81.9113495,4.4636036 C81.9113495,5.16558559 81.8084273,6.18378378 81.7056799,6.84918919 L79.7683322,19.4873874 L73.4726073,19.4873874 L75.2755796,7.6572973 C75.3087803,7.34108108 75.3785017,6.95531532 75.3785017,6.71063063 C75.3785017,5.7618018 74.8677353,5.55135135 74.2540467,5.55135135 C73.4722578,5.55135135 72.6908183,5.90234234 72.1106799,6.21873874 L70.1043097,19.4875676 L63.8101574,19.4875676 L65.6131298,7.65747748 C65.6463304,7.34126126 65.713955,6.9554955 65.713955,6.71081081 C65.713955,5.76198198 65.2030138,5.55153153 64.5914221,5.55153153 C63.7743356,5.55153153 62.9588218,5.9372973 62.4145052,6.21891892 L60.4062128,19.4877477 L54.0788599,19.4877477 L56.9701159,0.566126126 L62.3813045,0.566126126 L62.551327,2.14576577 C63.8101574,1.1990991 65.5105571,0.25009009 67.7900467,0.25009009 C69.7637405,0.249369369 71.0559464,1.12702703 71.7037093,2.32072072 Z M83.55059,11.7998198 C83.55059,5.83279279 86.6120433,0.249369369 93.6558322,0.249369369 C98.9633997,0.249369369 100.903543,3.47981982 100.903543,7.93873874 C100.903543,13.8365766 97.8751159,19.9443243 90.6614792,19.9443243 C85.3196626,19.9443243 83.55059,16.3281081 83.55059,11.7998198 Z M94.4374464,7.83279279 C94.4374464,6.28810811 94.0628028,5.23495495 92.9409689,5.23495495 C90.4570329,5.23495495 89.9469654,9.76306306 89.9469654,12.0794595 C89.9469654,13.8367568 90.4238322,14.9243243 91.5453166,14.9243243 C93.8931298,14.9243243 94.4374464,10.149009 94.4374464,7.83279279 Z"
+                })))));
+            }
+        }))).render(Object(jsx_pragmatic.preact)({
+            Preact: {
+                h: preact_module_a
+            }
+        }));
+        var _ref, _ref$logoColor, logoColor, props, primary;
+    }
+    function InstructionIcon(_ref3) {
+        var _ref3$stylingClass = _ref3.stylingClass;
+        return preact_module_a("svg", {
+            className: void 0 === _ref3$stylingClass ? "instruction-icon" : _ref3$stylingClass,
+            width: "68",
+            height: "46",
+            viewBox: "0 0 68 46",
+            fill: "none",
+            xmlns: "http://www.w3.org/2000/svg"
+        }, preact_module_a("circle", {
+            cx: "49",
+            cy: "25",
+            r: "18",
+            fill: "white",
+            stroke: "#888C94",
+            "stroke-width": "2"
+        }), preact_module_a("path", {
+            "fill-rule": "evenodd",
+            "clip-rule": "evenodd",
+            d: "M56.7188 15.5H51.9688C50.985 15.5 50.1875 16.2975 50.1875 17.2812V22.0312C50.1875 23.015 50.985 23.8125 51.9688 23.8125H56.7188C57.7025 23.8125 58.5 23.015 58.5 22.0312V17.2812C58.5 16.2975 57.7025 15.5 56.7188 15.5ZM51.375 17.2812C51.375 16.9533 51.6408 16.6875 51.9688 16.6875H56.7188C57.0467 16.6875 57.3125 16.9533 57.3125 17.2812V22.0312C57.3125 22.3592 57.0467 22.625 56.7188 22.625H51.9688C51.6408 22.625 51.375 22.3592 51.375 22.0312V17.2812ZM41.875 18.5083C41.875 18.1585 42.1585 17.875 42.5083 17.875H44.8042C45.154 17.875 45.4375 18.1585 45.4375 18.5083V20.8042C45.4375 21.154 45.154 21.4375 44.8042 21.4375H42.5083C42.1585 21.4375 41.875 21.154 41.875 20.8042V18.5083ZM52.5625 18.5083C52.5625 18.1585 52.846 17.875 53.1958 17.875H55.4917C55.8415 17.875 56.125 18.1585 56.125 18.5083V20.8042C56.125 21.154 55.8415 21.4375 55.4917 21.4375H53.1958C52.846 21.4375 52.5625 21.154 52.5625 20.8042V18.5083ZM50.8208 26.1875C50.471 26.1875 50.1875 26.471 50.1875 26.8208V27.9292C50.1875 28.279 50.471 28.5625 50.8208 28.5625H51.9292C52.279 28.5625 52.5625 28.279 52.5625 27.9292V26.8208C52.5625 26.471 52.279 26.1875 51.9292 26.1875H50.8208ZM50.1875 32.7583C50.1875 32.4085 50.471 32.125 50.8208 32.125H51.9292C52.279 32.125 52.5625 32.4085 52.5625 32.7583V33.8667C52.5625 34.2165 52.279 34.5 51.9292 34.5H50.8208C50.471 34.5 50.1875 34.2165 50.1875 33.8667V32.7583ZM56.7583 26.1875C56.4085 26.1875 56.125 26.471 56.125 26.8208V27.9292C56.125 28.279 56.4085 28.5625 56.7583 28.5625H57.8667C58.2165 28.5625 58.5 28.279 58.5 27.9292V26.8208C58.5 26.471 58.2165 26.1875 57.8667 26.1875H56.7583ZM56.125 32.7583C56.125 32.4085 56.4085 32.125 56.7583 32.125H57.8667C58.2165 32.125 58.5 32.4085 58.5 32.7583V33.8667C58.5 34.2165 58.2165 34.5 57.8667 34.5H56.7583C56.4085 34.5 56.125 34.2165 56.125 33.8667V32.7583ZM53.7895 29.1562C53.4398 29.1562 53.1562 29.4398 53.1562 29.7895V30.898C53.1562 31.2477 53.4398 31.5312 53.7895 31.5312H54.898C55.2477 31.5312 55.5312 31.2477 55.5312 30.898V29.7895C55.5312 29.4398 55.2477 29.1562 54.898 29.1562H53.7895ZM41.875 29.1958C41.875 28.846 42.1585 28.5625 42.5083 28.5625H44.8042C45.154 28.5625 45.4375 28.846 45.4375 29.1958V31.4917C45.4375 31.8415 45.154 32.125 44.8042 32.125H42.5083C42.1585 32.125 41.875 31.8415 41.875 31.4917V29.1958ZM41.2812 26.1875H46.0312C47.015 26.1875 47.8125 26.985 47.8125 27.9688V32.7188C47.8125 33.7025 47.015 34.5 46.0312 34.5H41.2812C40.2975 34.5 39.5 33.7025 39.5 32.7188V27.9688C39.5 26.985 40.2975 26.1875 41.2812 26.1875ZM41.2812 27.375C40.9533 27.375 40.6875 27.6408 40.6875 27.9688V32.7188C40.6875 33.0467 40.9533 33.3125 41.2812 33.3125H46.0312C46.3592 33.3125 46.625 33.0467 46.625 32.7188V27.9688C46.625 27.6408 46.3592 27.375 46.0312 27.375H41.2812ZM41.2812 15.5H46.0312C47.015 15.5 47.8125 16.2975 47.8125 17.2812V22.0312C47.8125 23.015 47.015 23.8125 46.0312 23.8125H41.2812C40.2975 23.8125 39.5 23.015 39.5 22.0312V17.2812C39.5 16.2975 40.2975 15.5 41.2812 15.5ZM41.2812 16.6875C40.9533 16.6875 40.6875 16.9533 40.6875 17.2812V22.0312C40.6875 22.3592 40.9533 22.625 41.2812 22.625H46.0312C46.3592 22.625 46.625 22.3592 46.625 22.0312V17.2812C46.625 16.9533 46.3592 16.6875 46.0312 16.6875H41.2812Z",
+            fill: "#2F3033"
+        }), preact_module_a("rect", {
+            x: "11.5",
+            y: "6.90039",
+            width: "20.7",
+            height: "29.9",
+            fill: "white"
+        }), preact_module_a("path", {
+            "fill-rule": "evenodd",
+            "clip-rule": "evenodd",
+            d: "M30.82 2.2998H12.88C10.8476 2.2998 9.20001 3.98283 9.20001 6.05894V42.2407C9.20001 44.3168 10.8476 45.9998 12.88 45.9998H30.82C32.8524 45.9998 34.5 44.3168 34.5 42.2407V6.05894C34.5 3.98283 32.8524 2.2998 30.82 2.2998ZM21.8499 42.6635C20.8337 42.6635 20.0099 41.822 20.0099 40.784C20.0099 39.7459 20.8337 38.9044 21.8499 38.9044C22.8662 38.9044 23.6899 39.7459 23.6899 40.784C23.6899 41.822 22.8662 42.6635 21.8499 42.6635ZM11.9599 36.414H31.7399V7.32767H11.9599V36.414Z",
+            fill: "#888C94"
+        }));
+    }
+    function VenmoMark() {
+        return preact_module_a("svg", {
+            id: "venmo-mark",
+            xmlns: "http://www.w3.org/2000/svg",
+            viewBox: "0 0 48 48"
+        }, preact_module_a("path", {
+            d: "M42.3 2L28.5 4.8c.8 1.9 1.4 4.1 1.4 7.4 0 6-4.2 14.8-7.7 20.4L18.5 3 3.3 4.5l7 41.5h17.4c7.7-10 17-24.3 17-35.2 0-3.4-.8-6.1-2.4-8.8z",
+            fill: "#fff"
+        }));
+    }
+    function AuthMark() {
+        return preact_module_a("svg", {
+            id: "success-mark",
+            width: "59",
+            height: "59",
+            viewBox: "0 0 59 59",
+            fill: "none",
+            xmlns: "http://www.w3.org/2000/svg"
+        }, preact_module_a("rect", {
+            x: "1",
+            y: "1",
+            width: "57",
+            height: "57",
+            rx: "28.5",
+            fill: "#148572",
+            stroke: "#888C94"
+        }), preact_module_a("g", {
+            "clip-path": "url(#clip0)"
+        }, preact_module_a("path", {
+            d: "M24.0068 40.8397C22.921 39.7538 22.921 37.9933 24.0068 36.9075L39.2933 21.621C40.3791 20.5352 42.1396 20.5352 43.2255 21.621C44.3113 22.7069 44.3113 24.4674 43.2255 25.5532L27.939 40.8397C26.8532 41.9255 25.0927 41.9255 24.0068 40.8397Z",
+            fill: "white"
+        }), preact_module_a("path", {
+            d: "M27.9763 40.8397C26.8905 41.9255 25.13 41.9255 24.0441 40.8397L17.1628 33.9583C16.0769 32.8725 16.0769 31.112 17.1628 30.0261C18.2486 28.9403 20.0091 28.9403 21.095 30.0261L27.9763 36.9075C29.0622 37.9933 29.0622 39.7538 27.9763 40.8397Z",
+            fill: "white"
+        })), preact_module_a("defs", null, preact_module_a("clipPath", {
+            id: "clip0"
+        }, preact_module_a("rect", {
+            width: "27.8049",
+            height: "27.8049",
+            fill: "white",
+            transform: "translate(16.2927 16.293)"
         }))));
     }
-    function Page(_ref) {
-        var cspNonce = _ref.cspNonce;
+    function QRCard(_ref) {
+        var cspNonce = _ref.cspNonce, svgString = _ref.svgString;
         var _useXProps = function() {
-            var _useState = hooks_module_l(window.xprops), xprops = _useState[0], setXProps = _useState[1];
-            hooks_module_y((function() {
+            var _useState = function(n) {
+                return hooks_module_o = 1, function(n, r, o) {
+                    var i = hooks_module_m(hooks_module_t++, 2);
+                    return i.t = n, i.__c || (i.__ = [ hooks_module_w(void 0, r), function(n) {
+                        var t = i.t(i.__[0], n);
+                        i.__[0] !== t && (i.__ = [ t, i.__[1] ], i.__c.setState({}));
+                    } ], i.__c = hooks_module_u), i.__;
+                }(hooks_module_w, n);
+            }(window.xprops), xprops = _useState[0], setXProps = _useState[1];
+            r = function() {
                 return xprops.onProps((function(newProps) {
                     setXProps(_extends({}, newProps));
                 }));
-            }), []);
+            }, o = [], i = hooks_module_m(hooks_module_t++, 3), !n.__s && function(n, t) {
+                return !n || n.length !== t.length || t.some((function(t, u) {
+                    return t !== n[u];
+                }));
+            }(i.__H, o) && (i.__ = r, i.__H = o, hooks_module_u.__H.__h.push(i));
+            var r, o, i;
             return _extends({}, xprops);
-        }(), choices = _useXProps.choices, onChoose = _useXProps.onChoose, verticalOffset = _useXProps.verticalOffset, hide = _useXProps.hide, _useXProps$onBlur = _useXProps.onBlur, onBlur = void 0 === _useXProps$onBlur ? src_util_noop : _useXProps$onBlur, _useXProps$onFocus = _useXProps.onFocus, onFocus = void 0 === _useXProps$onFocus ? src_util_noop : _useXProps$onFocus, _useXProps$onFocusFai = _useXProps.onFocusFail, onFocusFail = void 0 === _useXProps$onFocusFai ? src_util_noop : _useXProps$onFocusFai;
-        var _useState = hooks_module_l(!1), opaque = _useState[0], setOpaque = _useState[1];
-        var _useState2 = hooks_module_l(!1), visible = _useState2[0], setVisible = _useState2[1];
-        hooks_module_y((function() {
-            var hasChoices = Boolean(choices && choices.length);
-            setOpaque(hasChoices);
-            setVisible(hasChoices);
-        }), [ choices ]);
+        }(), state = _useXProps.state, errorText = _useXProps.errorText;
         return preact_module_a(y, null, preact_module_a("style", {
             nonce: cspNonce
-        }, "\n                    * {\n                        box-sizing: border-box;\n                    }\n\n                    html, body {\n                        margin: 0;\n                        padding: 0;\n                        opacity: " + (opaque ? "1" : "0") + ";\n                        transition: opacity " + .15.toFixed(2) + 's ease-in-out;\n                        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n                    }\n\n                    body {\n                        padding: 5px 20px;\n                        display: inline-block;\n                        width: 100%;\n                    }\n                '), choices && visible ? preact_module_a(Menu, {
-            choices: choices,
-            onChoose: function(_ref2) {
-                var id = _ref2.id, win = _ref2.win;
-                setVisible(!1);
-                return onChoose({
-                    id: id,
-                    win: win
-                });
-            },
-            onBlur: function() {
-                setOpaque(!1);
-                return promise_ZalgoPromise.delay(150).then((function() {
-                    setVisible(!1);
-                    return promise_ZalgoPromise.all([ onBlur(), hide() ]);
-                }));
-            },
-            onFocus: onFocus,
-            onFocusFail: onFocusFail,
-            cspNonce: cspNonce,
-            verticalOffset: verticalOffset
-        }) : null);
+        }, " ", '\n    * {\n        box-sizing: border-box;\n        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n        text-transform: none;        \n    }\n    html, body {\n        display: flex;\n        position: fixed;\n        width: 100%;\n        height: 100%;\n        top: 0;\n        left: 0;\n        align-items: center;\n        justify-content: center;\n    }\n    #error-view {\n        width: 100%;\n        height: 100%;\n        padding: 1.5em;\n        justify-content: center;\n    }\n    #error-view .error-message,\n    #error-view .reset-button {\n        color: #FFFFFF;\n        text-align: center;        \n        line-height: 16px;\n    }\n    #error-view .error-message {\n        margin-bottom: 2em;\n        word-break: break-word;\n    }\n    #error-view .reset-button {\n        cursor: pointer;\n        border: 0; \n        border-radius: 24px;\n        padding: 12px;\n        background: #3D93CE;\n        line-height: 24px;\n        font-weight: 700;\n        width: 300px;\n    }\n    .card, \n    #error-view {\n        display: inline-flex;\n        align-items: center;\n        flex-direction: column;\n    }\n    .card {\n        border-radius: 8px;        \n        width: 280px;\n        height: 320px; \n        backface-visibility: hidden;\n        -webkit-backface-visibility: hidden;\n        transition: transform 1s;\n        transform-style: preserve-3d;\n    }\n    #view-boxes {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100%;\n        width: 100%;\n    }\n    #view-boxes.qr_scanned #front-view,\n    #view-boxes.qr_authorized #front-view {\n        transform: rotateY(180deg);\n        position: absolute;\n    }\n    #view-boxes.qr_scanned #back-view,\n    #view-boxes.qr_authorized #back-view {\n        transform: rotateY(0deg);\n        position: relative;\n    }\n    #view-boxes #back-view #success-mark,\n    #view-boxes #back-view .success-message {\n        opacity: 0;\n    }\n    #view-boxes.qr_authorized #back-view #success-mark,\n    #view-boxes.qr_authorized #back-view .success-message {\n        opacity: 1;\n    }\n    #view-boxes.qr_authorized #back-view #success-mark {\n        transform: rotate(720deg);\n    }\n    #view-boxes.qr_authorized #back-view .auth-message {\n        opacity: 0;\n    }\n    #front-view {\n        background-color: white;\n        border: 1px solid #888C94;\n        z-index: 2;\n        transform: rotateY(0deg);\n        justify-content: flex-end;\n    }\n    #front-view > svg,\n    #front-view > img {\n        padding: 16px 16px 0px;\n    }\n    #front-view > img + img { \n        padding-top: 12px;\n        padding-bottom: 12px; \n    }\n    #qr-code {\n        min-width: 160px;\n        min-height: 160px;\n    }\n    #instructions {\n        background-color: #F5F5F5;\n        border-bottom-left-radius: 8px;\n        border-bottom-right-radius: 8px;\n        padding: 16px;\n        display: flex;\n        align-items: center;\n        font-size: 12px;\n        line-height: 16px;\n        width: 100%;\n    }\n    .instruction-icon {\n        min-width: 68px;\n        min-height: 46px;\n        margin-right: 16px;\n    }\n    #back-view {\n        position: absolute;\n        transform: rotateY(-180deg);\n        background-color: #3D93CE;\n        justify-content: center;\n        font-size: 18px;\n        line-height: 16px;\n        text-align: center;\n        color: #FFFFFF;\n    }    \n    #back-view .auth-message,\n    #back-view .success-message {\n        position: absolute;\n        bottom: -30px;\n        white-space: nowrap;\n        transition: opacity 500ms;\n    }\n    #back-view .mark {\n        position: relative ;\n    }\n    #venmo-mark{\n        width: 50%;\n    }\n    #success-mark {\n        position: absolute;\n        left: 50%;\n        bottom: -10%;\n        transition: transform 500ms, opacity 500ms;\n        transition-delay: 350ms;\n    }\n    ', " "), preact_module_a("div", {
+            id: "view-boxes",
+            className: state
+        }, "qr_error" === state ? preact_module_a(ErrorMessage, {
+            message: errorText,
+            resetFunc: function() {
+                return console.log("reset");
+            }
+        }) : preact_module_a("div", {
+            id: "front-view",
+            className: "card"
+        }, preact_module_a(QRCodeElement, {
+            svgString: svgString
+        }), preact_module_a(Logo, null), preact_module_a("div", {
+            id: "instructions"
+        }, preact_module_a(InstructionIcon, {
+            stylingClass: "instruction-icon"
+        }), "To scan QR code, Open your Venmo App")), preact_module_a("div", {
+            className: "card",
+            id: "back-view"
+        }, preact_module_a("span", {
+            className: "mark"
+        }, preact_module_a(VenmoMark, null), preact_module_a(AuthMark, null)), preact_module_a("div", {
+            className: "auth-message"
+        }, "Go to your Venmo app and authorize"), preact_module_a("div", {
+            className: "success-message"
+        }, "Venmo account authorized"))));
     }
-    function setupMenu(_ref3) {
+    function renderQRCode(_ref2) {
+        var _ref2$cspNonce = _ref2.cspNonce, cspNonce = void 0 === _ref2$cspNonce ? "" : _ref2$cspNonce, svgString = _ref2.svgString;
+        console.log("+++++");
+        console.dir(window.xprops);
         !function(l, u, i) {
             var o, e;
             n.__ && n.__(l, u), o = !1 ? null : u.__k, e = [], I(u, l = u.__k = preact_module_a(y, null, [ l ]), o || preact_module_r, preact_module_r, void 0 !== u.ownerSVGElement, o ? null : u.firstChild ? f.slice.call(u.childNodes) : null, e, o ? o.__e : u.firstChild, !1), 
             T(e, l);
-        }(preact_module_a(Page, {
-            cspNonce: _ref3.cspNonce
+        }(preact_module_a(QRCard, {
+            cspNonce: cspNonce,
+            svgString: svgString
         }), function() {
             var body = document.body;
             if (!body) throw new Error("Document body not found");
